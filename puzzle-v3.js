@@ -325,11 +325,31 @@ class SimpleMirrorPuzzle {
     
     onPuzzleComplete() {
         this.targetArea.classList.add('complete');
-        this.revealedContent.classList.add('visible');
         
+        // Shatter effect - make pieces explode outward and fade
         setTimeout(() => {
-            this.completionOverlay.classList.remove('hidden');
-        }, 1500);
+            this.pieces.forEach((piece, index) => {
+                const angle = (index / this.totalPieces) * Math.PI * 2;
+                const distance = 300;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                const rotation = Math.random() * 720 - 360;
+                
+                piece.element.style.transition = 'all 1s ease-out';
+                piece.element.style.transform = `translate(${tx}px, ${ty}px) rotate(${rotation}deg) scale(0.3)`;
+                piece.element.style.opacity = '0';
+            });
+            
+            // Show album art after pieces start shattering
+            setTimeout(() => {
+                this.revealedContent.classList.add('visible');
+            }, 300);
+            
+            // Show completion overlay
+            setTimeout(() => {
+                this.completionOverlay.classList.remove('hidden');
+            }, 1500);
+        }, 500);
     }
     
     shufflePieces() {
