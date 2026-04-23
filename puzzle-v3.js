@@ -5,7 +5,7 @@
 
 class SimpleMirrorPuzzle {
     constructor() {
-        this.totalPieces = 9;
+        this.totalPieces = 6;
         this.snapThreshold = 200; // Very forgiving
         this.purchaseURL = 'https://www.samsamplemusic.com/litmab';
         
@@ -41,20 +41,57 @@ class SimpleMirrorPuzzle {
     }
     
     createSimplePuzzle() {
-        // Simple 3x2 grid puzzle - pieces fit together perfectly
-        const gridSize = 400;
-        const pieceWidth = gridSize / 3;
-        const pieceHeight = gridSize / 2;
-        
+        // 6 broken mirror shards that fit together to form a 400x400px square
+        // Jagged crack patterns that interlock
         const pieces = [
-            // Row 1
-            { id: 1, row: 0, col: 0, path: 'M0,0 L133,0 L133,200 L0,200 Z' },
-            { id: 2, row: 0, col: 1, path: 'M0,0 L134,0 L134,200 L0,200 Z' },
-            { id: 3, row: 0, col: 2, path: 'M0,0 L133,0 L133,200 L0,200 Z' },
-            // Row 2
-            { id: 4, row: 1, col: 0, path: 'M0,0 L133,0 L133,200 L0,200 Z' },
-            { id: 5, row: 1, col: 1, path: 'M0,0 L134,0 L134,200 L0,200 Z' },
-            { id: 6, row: 1, col: 2, path: 'M0,0 L133,0 L133,200 L0,200 Z' }
+            // Top-left large shard
+            {
+                id: 1,
+                path: 'M0,0 L240,0 L235,100 L245,200 L120,198 L125,100 L0,102 Z',
+                viewBox: '0 0 245 200',
+                targetX: 0,
+                targetY: 0
+            },
+            // Top-right shard
+            {
+                id: 2,
+                path: 'M5,0 L160,0 L160,102 L35,100 L30,198 L2,200 L10,100 Z',
+                viewBox: '0 0 160 200',
+                targetX: 240,
+                targetY: 0
+            },
+            // Middle-left shard
+            {
+                id: 3,
+                path: 'M0,2 L125,0 L120,100 L0,102 Z',
+                viewBox: '0 0 125 102',
+                targetX: 0,
+                targetY: 198
+            },
+            // Middle-center shard
+            {
+                id: 4,
+                path: 'M5,0 L120,2 L115,100 L5,102 L0,50 Z',
+                viewBox: '0 0 120 102',
+                targetX: 120,
+                targetY: 198
+            },
+            // Middle-right shard
+            {
+                id: 5,
+                path: 'M2,0 L160,2 L160,102 L0,100 L5,50 Z',
+                viewBox: '0 0 160 102',
+                targetX: 240,
+                targetY: 198
+            },
+            // Bottom shard
+            {
+                id: 6,
+                path: 'M0,0 L400,2 L400,100 L0,98 Z',
+                viewBox: '0 0 400 100',
+                targetX: 0,
+                targetY: 300
+            }
         ];
         
         pieces.forEach(pieceData => {
@@ -71,13 +108,13 @@ class SimpleMirrorPuzzle {
         pieceDiv.className = 'puzzle-piece';
         pieceDiv.dataset.piece = data.id;
         
-        // Calculate target position
-        const targetX = data.col * (data.col === 1 ? 134 : 133);
-        const targetY = data.row * 200;
+        // Use provided target positions
+        const targetX = data.targetX;
+        const targetY = data.targetY;
         
-        // Create SVG
+        // Create SVG with provided viewBox
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('viewBox', data.col === 1 ? '0 0 134 200' : '0 0 133 200');
+        svg.setAttribute('viewBox', data.viewBox);
         svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
         svg.style.width = '100%';
         svg.style.height = '100%';
@@ -235,8 +272,28 @@ class SimpleMirrorPuzzle {
         piece.element.style.position = 'absolute';
         piece.element.style.left = piece.targetX + 'px';
         piece.element.style.top = piece.targetY + 'px';
-        piece.element.style.width = (piece.id === 2 || piece.id === 5) ? '134px' : '133px';
-        piece.element.style.height = '200px';
+        
+        // Set size based on shard dimensions
+        if (piece.id === 1) {
+            piece.element.style.width = '245px';
+            piece.element.style.height = '200px';
+        } else if (piece.id === 2) {
+            piece.element.style.width = '160px';
+            piece.element.style.height = '200px';
+        } else if (piece.id === 3) {
+            piece.element.style.width = '125px';
+            piece.element.style.height = '102px';
+        } else if (piece.id === 4) {
+            piece.element.style.width = '120px';
+            piece.element.style.height = '102px';
+        } else if (piece.id === 5) {
+            piece.element.style.width = '160px';
+            piece.element.style.height = '102px';
+        } else if (piece.id === 6) {
+            piece.element.style.width = '400px';
+            piece.element.style.height = '100px';
+        }
+        
         piece.element.style.zIndex = '100';
         
         this.targetArea.appendChild(piece.element);
