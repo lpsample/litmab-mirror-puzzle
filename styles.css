@@ -91,16 +91,32 @@ body {
     position: relative;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-    border: 2px dashed rgba(255, 255, 255, 0.15);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, rgba(74, 158, 255, 0.05) 70%);
+    border: 3px dashed rgba(74, 158, 255, 0.4);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 
-        0 0 40px rgba(74, 158, 255, 0.1),
-        inset 0 0 40px rgba(255, 255, 255, 0.02);
+    box-shadow:
+        0 0 60px rgba(74, 158, 255, 0.3),
+        inset 0 0 60px rgba(74, 158, 255, 0.1);
     transition: all 0.3s ease;
+    animation: pulseTarget 3s ease-in-out infinite;
+}
+
+@keyframes pulseTarget {
+    0%, 100% {
+        border-color: rgba(74, 158, 255, 0.4);
+        box-shadow:
+            0 0 60px rgba(74, 158, 255, 0.3),
+            inset 0 0 60px rgba(74, 158, 255, 0.1);
+    }
+    50% {
+        border-color: rgba(74, 158, 255, 0.6);
+        box-shadow:
+            0 0 80px rgba(74, 158, 255, 0.5),
+            inset 0 0 80px rgba(74, 158, 255, 0.2);
+    }
 }
 
 .target-area.complete {
@@ -125,6 +141,9 @@ body {
     height: 150px;
     pointer-events: none;
     transition: all 0.3s ease;
+    background: radial-gradient(circle, rgba(74, 158, 255, 0.1) 0%, transparent 70%);
+    border: 2px dashed rgba(74, 158, 255, 0.2);
+    border-radius: 10px;
 }
 
 /* Position target slots in a circular pattern */
@@ -197,14 +216,29 @@ body {
     cursor: grab;
     position: relative;
     transition: transform 0.2s ease, filter 0.2s ease;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5))
+            drop-shadow(0 0 15px rgba(255, 255, 255, 0.3))
+            drop-shadow(0 0 25px rgba(74, 158, 255, 0.2));
     touch-action: none;
     user-select: none;
+    animation: floatPiece 3s ease-in-out infinite;
 }
 
 .mirror-piece:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 6px 12px rgba(74, 158, 255, 0.4));
+    transform: scale(1.1);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6))
+            drop-shadow(0 0 20px rgba(255, 255, 255, 0.5))
+            drop-shadow(0 0 35px rgba(74, 158, 255, 0.4));
+    animation: none;
+}
+
+@keyframes floatPiece {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(2deg);
+    }
 }
 
 .mirror-piece.dragging {
