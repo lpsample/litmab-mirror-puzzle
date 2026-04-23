@@ -326,30 +326,87 @@ class SimpleMirrorPuzzle {
     onPuzzleComplete() {
         this.targetArea.classList.add('complete');
         
-        // Shatter effect - make pieces explode outward and fade
+        // Play glass breaking sound
+        this.playShatterSound();
+        
+        // VIOLENT shatter effect - pieces explode in all directions
         setTimeout(() => {
             this.pieces.forEach((piece, index) => {
-                const angle = (index / this.totalPieces) * Math.PI * 2;
-                const distance = 300;
+                // Random angle for chaotic explosion
+                const angle = Math.random() * Math.PI * 2;
+                // Much larger distance for violent effect
+                const distance = 600 + Math.random() * 400;
                 const tx = Math.cos(angle) * distance;
                 const ty = Math.sin(angle) * distance;
-                const rotation = Math.random() * 720 - 360;
+                // Extreme rotation for spinning effect
+                const rotation = Math.random() * 1440 - 720; // -720 to 720 degrees
                 
-                piece.element.style.transition = 'all 1s ease-out';
-                piece.element.style.transform = `translate(${tx}px, ${ty}px) rotate(${rotation}deg) scale(0.3)`;
+                // Faster, more violent transition
+                piece.element.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                piece.element.style.transform = `translate(${tx}px, ${ty}px) rotate(${rotation}deg) scale(0.1)`;
                 piece.element.style.opacity = '0';
             });
             
             // Show album art after pieces start shattering
             setTimeout(() => {
                 this.revealedContent.classList.add('visible');
-            }, 300);
+            }, 200);
             
             // Show completion overlay
             setTimeout(() => {
                 this.completionOverlay.classList.remove('hidden');
             }, 1500);
-        }, 500);
+        }, 100);
+    }
+    
+    playShatterSound() {
+        // Create audio context for glass breaking sound
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Create multiple overlapping sounds for realistic glass break
+        const now = audioContext.currentTime;
+        
+        // Main crash sound
+        for (let i = 0; i < 8; i++) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            // Random frequencies for chaotic glass sound
+            oscillator.frequency.value = 800 + Math.random() * 2000;
+            oscillator.type = 'square';
+            
+            // Sharp attack, quick decay
+            gainNode.gain.setValueAtTime(0.3, now + i * 0.02);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + i * 0.02 + 0.3);
+            
+            oscillator.start(now + i * 0.02);
+            oscillator.stop(now + i * 0.02 + 0.3);
+        }
+        
+        // Add white noise for realistic shatter
+        const bufferSize = audioContext.sampleRate * 0.5;
+        const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+        const data = buffer.getChannelData(0);
+        
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+        }
+        
+        const noise = audioContext.createBufferSource();
+        const noiseGain = audioContext.createGain();
+        
+        noise.buffer = buffer;
+        noise.connect(noiseGain);
+        noiseGain.connect(audioContext.destination);
+        
+        noiseGain.gain.setValueAtTime(0.2, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+        
+        noise.start(now);
+        noise.stop(now + 0.5);
     }
     
     shufflePieces() {
