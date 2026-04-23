@@ -186,8 +186,9 @@ body {
     position: relative;
     transition: transform 0.2s ease, filter 0.2s ease;
     filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6))
-            drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))
-            drop-shadow(0 0 30px rgba(200, 200, 255, 0.3));
+            drop-shadow(0 0 25px rgba(255, 255, 255, 0.6))
+            drop-shadow(0 0 35px rgba(220, 220, 255, 0.5))
+            drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
     touch-action: none;
     user-select: none;
     animation: floatShard 4s ease-in-out infinite;
@@ -196,8 +197,9 @@ body {
 .mirror-shard:hover {
     transform: scale(1.05);
     filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.7))
-            drop-shadow(0 0 25px rgba(255, 255, 255, 0.6))
-            drop-shadow(0 0 40px rgba(200, 200, 255, 0.5));
+            drop-shadow(0 0 30px rgba(255, 255, 255, 0.8))
+            drop-shadow(0 0 45px rgba(220, 220, 255, 0.7))
+            drop-shadow(0 0 20px rgba(255, 255, 255, 1));
     animation: none;
 }
 
@@ -533,25 +535,29 @@ body {
     .puzzle-header {
         margin-bottom: 20px;
     }
+    
+    .puzzle-title {
+        font-size: 1.5rem;
+    }
+    
+    .puzzle-subtitle {
+        font-size: 0.9rem;
+    }
 
     .target-area {
-        width: 300px;
-        height: 300px;
+        width: 320px;
+        height: 320px;
     }
 
-    .target-slot {
-        width: 100px;
-        height: 100px;
-    }
-
-    .mirror-piece {
-        width: 90px;
-        height: 90px;
+    .mirror-shard {
+        max-width: 180px;
+        max-height: 180px;
     }
 
     .pieces-area {
         gap: 15px;
         padding: 15px;
+        min-height: 150px;
     }
 
     .instructions {
@@ -578,19 +584,28 @@ body {
 }
 
 @media (max-width: 480px) {
+    .puzzle-title {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+    
+    .puzzle-subtitle {
+        font-size: 0.85rem;
+    }
+
     .target-area {
-        width: 250px;
-        height: 250px;
+        width: 280px;
+        height: 280px;
     }
 
-    .target-slot {
-        width: 80px;
-        height: 80px;
+    .mirror-shard {
+        max-width: 140px;
+        max-height: 140px;
     }
-
-    .mirror-piece {
-        width: 70px;
-        height: 70px;
+    
+    .pieces-area {
+        gap: 10px;
+        padding: 10px;
     }
 
     .completion-title {

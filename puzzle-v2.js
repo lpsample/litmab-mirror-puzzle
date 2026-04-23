@@ -7,7 +7,7 @@ class BrokenMirrorPuzzle {
     constructor() {
         // Configuration
         this.totalPieces = 6;
-        this.snapThreshold = 40;
+        this.snapThreshold = 150; // Much larger snap area - easier to place
         this.purchaseURL = 'https://www.samsamplemusic.com/litmab';
         this.mirrorSize = 400; // Square mirror size
         
@@ -131,11 +131,12 @@ class BrokenMirrorPuzzle {
         gradient.setAttribute('y2', '100%');
         
         const stops = [
-            { offset: '0%', color: '#f0f0f0', opacity: '1' },
-            { offset: '25%', color: '#ffffff', opacity: '1' },
-            { offset: '50%', color: '#e8e8e8', opacity: '1' },
-            { offset: '75%', color: '#d0d0d0', opacity: '1' },
-            { offset: '100%', color: '#c8c8c8', opacity: '1' }
+            { offset: '0%', color: '#ffffff', opacity: '1' },
+            { offset: '20%', color: '#f5f5f5', opacity: '1' },
+            { offset: '40%', color: '#e0e0e0', opacity: '1' },
+            { offset: '60%', color: '#f8f8f8', opacity: '1' },
+            { offset: '80%', color: '#d8d8d8', opacity: '1' },
+            { offset: '100%', color: '#f0f0f0', opacity: '1' }
         ];
         
         stops.forEach(s => {
