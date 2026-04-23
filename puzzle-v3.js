@@ -41,56 +41,56 @@ class SimpleMirrorPuzzle {
     }
     
     createSimplePuzzle() {
-        // 6 broken mirror shards that fit together to form a 400x400px square
-        // Jagged crack patterns that interlock
+        // 6 broken mirror shards that fit together perfectly to form a 400x400px square
+        // Jagged crack patterns with precise interlocking edges
         const pieces = [
-            // Top-left large shard
+            // Top-left large shard (covers left 2/3 of top half)
             {
                 id: 1,
-                path: 'M0,0 L240,0 L235,100 L245,200 L120,198 L125,100 L0,102 Z',
-                viewBox: '0 0 245 200',
+                path: 'M0,0 L267,0 L262,95 L272,190 L267,200 L133,198 L138,95 L5,97 L0,50 Z',
+                viewBox: '0 0 272 200',
                 targetX: 0,
                 targetY: 0
             },
-            // Top-right shard
+            // Top-right shard (covers right 1/3 of top half)
             {
                 id: 2,
-                path: 'M5,0 L160,0 L160,102 L35,100 L30,198 L2,200 L10,100 Z',
-                viewBox: '0 0 160 200',
-                targetX: 240,
+                path: 'M5,0 L128,0 L128,50 L133,97 L138,190 L133,198 L5,200 L10,95 L0,50 Z',
+                viewBox: '0 0 133 200',
+                targetX: 267,
                 targetY: 0
             },
             // Middle-left shard
             {
                 id: 3,
-                path: 'M0,2 L125,0 L120,100 L0,102 Z',
-                viewBox: '0 0 125 102',
+                path: 'M5,2 L138,0 L133,95 L5,97 L0,50 Z',
+                viewBox: '0 0 138 97',
                 targetX: 0,
                 targetY: 198
             },
             // Middle-center shard
             {
                 id: 4,
-                path: 'M5,0 L120,2 L115,100 L5,102 L0,50 Z',
-                viewBox: '0 0 120 102',
-                targetX: 120,
+                path: 'M5,0 L134,2 L129,95 L5,97 L0,50 Z',
+                viewBox: '0 0 134 97',
+                targetX: 133,
                 targetY: 198
             },
             // Middle-right shard
             {
                 id: 5,
-                path: 'M2,0 L160,2 L160,102 L0,100 L5,50 Z',
-                viewBox: '0 0 160 102',
-                targetX: 240,
+                path: 'M5,0 L133,2 L133,50 L128,97 L0,95 L5,50 Z',
+                viewBox: '0 0 133 97',
+                targetX: 267,
                 targetY: 198
             },
-            // Bottom shard
+            // Bottom shard (full width)
             {
                 id: 6,
-                path: 'M0,0 L400,2 L400,100 L0,98 Z',
-                viewBox: '0 0 400 100',
+                path: 'M0,5 L5,0 L133,2 L267,0 L272,5 L400,3 L400,105 L0,105 Z',
+                viewBox: '0 0 400 105',
                 targetX: 0,
-                targetY: 300
+                targetY: 295
             }
         ];
         
@@ -273,25 +273,25 @@ class SimpleMirrorPuzzle {
         piece.element.style.left = piece.targetX + 'px';
         piece.element.style.top = piece.targetY + 'px';
         
-        // Set size based on shard dimensions
+        // Set size based on updated shard dimensions
         if (piece.id === 1) {
-            piece.element.style.width = '245px';
+            piece.element.style.width = '272px';
             piece.element.style.height = '200px';
         } else if (piece.id === 2) {
-            piece.element.style.width = '160px';
+            piece.element.style.width = '133px';
             piece.element.style.height = '200px';
         } else if (piece.id === 3) {
-            piece.element.style.width = '125px';
-            piece.element.style.height = '102px';
+            piece.element.style.width = '138px';
+            piece.element.style.height = '97px';
         } else if (piece.id === 4) {
-            piece.element.style.width = '120px';
-            piece.element.style.height = '102px';
+            piece.element.style.width = '134px';
+            piece.element.style.height = '97px';
         } else if (piece.id === 5) {
-            piece.element.style.width = '160px';
-            piece.element.style.height = '102px';
+            piece.element.style.width = '133px';
+            piece.element.style.height = '97px';
         } else if (piece.id === 6) {
             piece.element.style.width = '400px';
-            piece.element.style.height = '100px';
+            piece.element.style.height = '105px';
         }
         
         piece.element.style.zIndex = '100';
