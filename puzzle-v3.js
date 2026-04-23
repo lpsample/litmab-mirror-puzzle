@@ -42,55 +42,55 @@ class SimpleMirrorPuzzle {
     
     createSimplePuzzle() {
         // 6 broken mirror shards that fit together perfectly to form a 400x400px square
-        // Redesigned to eliminate gaps - piece 1 now fully covers top-left corner
+        // NO GAPS - Complete coverage
         const pieces = [
-            // Top-left large shard - EXPANDED to cover full corner (no hole)
+            // Top-left large shard (covers full left side of top half)
             {
                 id: 1,
-                path: 'M0,0 L270,0 L265,50 L270,100 L265,150 L270,200 L135,198 L140,150 L135,100 L140,50 L135,0 L0,0 Z',
-                viewBox: '0 0 270 200',
+                path: 'M0,0 L200,0 L195,50 L200,100 L195,150 L200,200 L0,200 Z',
+                viewBox: '0 0 200 200',
                 targetX: 0,
                 targetY: 0
             },
-            // Top-right shard (right side of top half)
+            // Top-right shard (covers right side of top half)
             {
                 id: 2,
-                path: 'M0,0 L130,0 L130,50 L135,100 L130,150 L135,198 L0,200 L5,150 L0,100 L5,50 Z',
-                viewBox: '0 0 135 200',
-                targetX: 270,
+                path: 'M0,0 L200,0 L200,200 L5,200 L0,150 L5,100 L0,50 Z',
+                viewBox: '0 0 200 200',
+                targetX: 200,
                 targetY: 0
             },
             // Middle-left shard
             {
                 id: 3,
-                path: 'M0,2 L135,0 L140,50 L135,100 L0,98 L5,50 Z',
-                viewBox: '0 0 140 100',
+                path: 'M0,0 L130,0 L135,50 L130,100 L0,100 Z',
+                viewBox: '0 0 135 100',
                 targetX: 0,
-                targetY: 198
+                targetY: 200
             },
             // Middle-center shard
             {
                 id: 4,
-                path: 'M0,0 L130,2 L135,50 L130,98 L0,100 L5,50 Z',
+                path: 'M0,0 L135,0 L135,100 L0,100 Z',
                 viewBox: '0 0 135 100',
-                targetX: 135,
-                targetY: 198
+                targetX: 130,
+                targetY: 200
             },
             // Middle-right shard
             {
                 id: 5,
-                path: 'M0,0 L130,2 L130,50 L135,98 L0,100 L5,50 Z',
+                path: 'M0,0 L135,0 L135,100 L5,100 L0,50 Z',
                 viewBox: '0 0 135 100',
-                targetX: 270,
-                targetY: 198
+                targetX: 265,
+                targetY: 200
             },
             // Bottom shard (full width)
             {
                 id: 6,
-                path: 'M0,2 L135,0 L270,2 L405,0 L405,102 L0,102 Z',
-                viewBox: '0 0 405 102',
+                path: 'M0,0 L400,0 L400,100 L0,100 Z',
+                viewBox: '0 0 400 100',
                 targetX: 0,
-                targetY: 298
+                targetY: 300
             }
         ];
         
@@ -273,25 +273,25 @@ class SimpleMirrorPuzzle {
         piece.element.style.left = piece.targetX + 'px';
         piece.element.style.top = piece.targetY + 'px';
         
-        // Set size based on updated shard dimensions
+        // Set size based on redesigned shard dimensions (NO GAPS)
         if (piece.id === 1) {
-            piece.element.style.width = '272px';
+            piece.element.style.width = '200px';
             piece.element.style.height = '200px';
         } else if (piece.id === 2) {
-            piece.element.style.width = '133px';
+            piece.element.style.width = '200px';
             piece.element.style.height = '200px';
         } else if (piece.id === 3) {
-            piece.element.style.width = '138px';
-            piece.element.style.height = '97px';
+            piece.element.style.width = '130px';
+            piece.element.style.height = '100px';
         } else if (piece.id === 4) {
-            piece.element.style.width = '134px';
-            piece.element.style.height = '97px';
+            piece.element.style.width = '135px';
+            piece.element.style.height = '100px';
         } else if (piece.id === 5) {
-            piece.element.style.width = '133px';
-            piece.element.style.height = '97px';
+            piece.element.style.width = '135px';
+            piece.element.style.height = '100px';
         } else if (piece.id === 6) {
             piece.element.style.width = '400px';
-            piece.element.style.height = '105px';
+            piece.element.style.height = '100px';
         }
         
         piece.element.style.zIndex = '100';
