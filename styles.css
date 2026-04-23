@@ -89,19 +89,37 @@ body {
    =================================== */
 .target-area {
     position: relative;
-    width: 480px;
-    height: 480px;
-    background: linear-gradient(135deg, rgba(20, 20, 30, 0.8) 0%, rgba(10, 10, 20, 0.9) 100%);
-    border: 4px solid rgba(100, 100, 120, 0.4);
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, rgba(30, 30, 40, 0.95) 0%, rgba(15, 15, 25, 0.98) 100%);
+    border: 5px solid rgba(74, 158, 255, 0.6);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow:
-        0 0 40px rgba(0, 0, 0, 0.6),
-        inset 0 0 60px rgba(0, 0, 0, 0.4),
-        0 0 80px rgba(74, 158, 255, 0.2);
+        0 0 50px rgba(74, 158, 255, 0.4),
+        inset 0 0 80px rgba(0, 0, 0, 0.5),
+        0 0 100px rgba(74, 158, 255, 0.3);
     transition: all 0.3s ease;
+    animation: pulseFrame 3s ease-in-out infinite;
+}
+
+@keyframes pulseFrame {
+    0%, 100% {
+        border-color: rgba(74, 158, 255, 0.6);
+        box-shadow:
+            0 0 50px rgba(74, 158, 255, 0.4),
+            inset 0 0 80px rgba(0, 0, 0, 0.5),
+            0 0 100px rgba(74, 158, 255, 0.3);
+    }
+    50% {
+        border-color: rgba(74, 158, 255, 0.8);
+        box-shadow:
+            0 0 70px rgba(74, 158, 255, 0.6),
+            inset 0 0 80px rgba(0, 0, 0, 0.5),
+            0 0 120px rgba(74, 158, 255, 0.5);
+    }
 }
 
 .target-area.complete {
@@ -178,10 +196,10 @@ body {
 /* ===================================
    MIRROR PIECES
    =================================== */
-/* Mirror Shards */
-.mirror-shard {
-    max-width: 250px;
-    max-height: 250px;
+/* Puzzle Pieces */
+.puzzle-piece {
+    width: 120px;
+    height: 120px;
     cursor: grab;
     position: relative;
     transition: transform 0.2s ease, filter 0.2s ease;
@@ -191,10 +209,10 @@ body {
             drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
     touch-action: none;
     user-select: none;
-    animation: floatShard 4s ease-in-out infinite;
+    animation: floatPiece 4s ease-in-out infinite;
 }
 
-.mirror-shard:hover {
+.puzzle-piece:hover {
     transform: scale(1.05);
     filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.7))
             drop-shadow(0 0 30px rgba(255, 255, 255, 0.8))
@@ -203,16 +221,16 @@ body {
     animation: none;
 }
 
-@keyframes floatShard {
+@keyframes floatPiece {
     0%, 100% {
-        transform: translateY(0px) rotate(0deg);
+        transform: translateY(0px);
     }
     50% {
-        transform: translateY(-8px) rotate(1deg);
+        transform: translateY(-8px);
     }
 }
 
-.mirror-shard.dragging {
+.puzzle-piece.dragging {
     cursor: grabbing;
     opacity: 0.9;
     z-index: 1000;
@@ -222,14 +240,14 @@ body {
             drop-shadow(0 0 50px rgba(74, 158, 255, 0.6));
 }
 
-.mirror-shard.placed {
+.puzzle-piece.placed {
     cursor: default;
     pointer-events: none;
     animation: snapInPlace 0.5s ease-out;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    filter: none;
 }
 
-.mirror-shard svg {
+.puzzle-piece svg {
     width: 100%;
     height: 100%;
     display: block;
@@ -549,9 +567,9 @@ body {
         height: 320px;
     }
 
-    .mirror-shard {
-        max-width: 180px;
-        max-height: 180px;
+    .puzzle-piece {
+        width: 100px;
+        height: 100px;
     }
 
     .pieces-area {
@@ -598,9 +616,9 @@ body {
         height: 280px;
     }
 
-    .mirror-shard {
-        max-width: 140px;
-        max-height: 140px;
+    .puzzle-piece {
+        width: 90px;
+        height: 90px;
     }
     
     .pieces-area {
