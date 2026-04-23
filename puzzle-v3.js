@@ -42,55 +42,55 @@ class SimpleMirrorPuzzle {
     
     createSimplePuzzle() {
         // 6 broken mirror shards that fit together perfectly to form a 400x400px square
-        // Jagged crack patterns with precise interlocking edges
+        // Redesigned to eliminate gaps - piece 1 now fully covers top-left corner
         const pieces = [
-            // Top-left large shard (covers left 2/3 of top half)
+            // Top-left large shard - EXPANDED to cover full corner (no hole)
             {
                 id: 1,
-                path: 'M0,0 L267,0 L262,95 L272,190 L267,200 L133,198 L138,95 L5,97 L0,50 Z',
-                viewBox: '0 0 272 200',
+                path: 'M0,0 L270,0 L265,50 L270,100 L265,150 L270,200 L135,198 L140,150 L135,100 L140,50 L135,0 L0,0 Z',
+                viewBox: '0 0 270 200',
                 targetX: 0,
                 targetY: 0
             },
-            // Top-right shard (covers right 1/3 of top half)
+            // Top-right shard (right side of top half)
             {
                 id: 2,
-                path: 'M5,0 L128,0 L128,50 L133,97 L138,190 L133,198 L5,200 L10,95 L0,50 Z',
-                viewBox: '0 0 133 200',
-                targetX: 267,
+                path: 'M0,0 L130,0 L130,50 L135,100 L130,150 L135,198 L0,200 L5,150 L0,100 L5,50 Z',
+                viewBox: '0 0 135 200',
+                targetX: 270,
                 targetY: 0
             },
             // Middle-left shard
             {
                 id: 3,
-                path: 'M5,2 L138,0 L133,95 L5,97 L0,50 Z',
-                viewBox: '0 0 138 97',
+                path: 'M0,2 L135,0 L140,50 L135,100 L0,98 L5,50 Z',
+                viewBox: '0 0 140 100',
                 targetX: 0,
                 targetY: 198
             },
             // Middle-center shard
             {
                 id: 4,
-                path: 'M5,0 L134,2 L129,95 L5,97 L0,50 Z',
-                viewBox: '0 0 134 97',
-                targetX: 133,
+                path: 'M0,0 L130,2 L135,50 L130,98 L0,100 L5,50 Z',
+                viewBox: '0 0 135 100',
+                targetX: 135,
                 targetY: 198
             },
             // Middle-right shard
             {
                 id: 5,
-                path: 'M5,0 L133,2 L133,50 L128,97 L0,95 L5,50 Z',
-                viewBox: '0 0 133 97',
-                targetX: 267,
+                path: 'M0,0 L130,2 L130,50 L135,98 L0,100 L5,50 Z',
+                viewBox: '0 0 135 100',
+                targetX: 270,
                 targetY: 198
             },
             // Bottom shard (full width)
             {
                 id: 6,
-                path: 'M0,5 L5,0 L133,2 L267,0 L272,5 L400,3 L400,105 L0,105 Z',
-                viewBox: '0 0 400 105',
+                path: 'M0,2 L135,0 L270,2 L405,0 L405,102 L0,102 Z',
+                viewBox: '0 0 405 102',
                 targetX: 0,
-                targetY: 295
+                targetY: 298
             }
         ];
         
