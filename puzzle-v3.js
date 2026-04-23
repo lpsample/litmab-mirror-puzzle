@@ -329,22 +329,20 @@ class SimpleMirrorPuzzle {
         // Play glass breaking sound
         this.playShatterSound();
         
-        // VIOLENT shatter effect - pieces explode in all directions
+        // VIOLENT shatter effect - each piece breaks into smaller shards
         setTimeout(() => {
             this.pieces.forEach((piece, index) => {
-                // Random angle for chaotic explosion
-                const angle = Math.random() * Math.PI * 2;
-                // Much larger distance for violent effect
-                const distance = 600 + Math.random() * 400;
-                const tx = Math.cos(angle) * distance;
-                const ty = Math.sin(angle) * distance;
-                // Extreme rotation for spinning effect
-                const rotation = Math.random() * 1440 - 720; // -720 to 720 degrees
+                // Create 4-6 smaller shards from each piece
+                const shardCount = 4 + Math.floor(Math.random() * 3);
                 
-                // Faster, more violent transition
-                piece.element.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                piece.element.style.transform = `translate(${tx}px, ${ty}px) rotate(${rotation}deg) scale(0.1)`;
+                for (let i = 0; i < shardCount; i++) {
+                    const shard = this.createShard(piece.element, i, shardCount);
+                    this.targetArea.appendChild(shard);
+                }
+                
+                // Hide original piece immediately
                 piece.element.style.opacity = '0';
+                piece.element.style.transition = 'opacity 0.1s';
             });
             
             // Show album art after pieces start shattering
@@ -357,6 +355,79 @@ class SimpleMirrorPuzzle {
                 this.completionOverlay.classList.remove('hidden');
             }, 1500);
         }, 100);
+    }
+    
+    createShard(originalPiece, shardIndex, totalShards) {
+        const shard = document.createElement('div');
+        shard.className = 'glass-shard';
+        
+        // Get original piece position
+        const rect = originalPiece.getBoundingClientRect();
+        const targetRect = this.targetArea.getBoundingClientRect();
+        
+        // Create jagged shard shape
+        const size = 20 + Math.random() * 40;
+        shard.style.width = size + 'px';
+        shard.style.height = size + 'px';
+        shard.style.position = 'absolute';
+        shard.style.left = (rect.left - targetRect.left + Math.random() * rect.width) + 'px';
+        shard.style.top = (rect.top - targetRect.top + Math.random() * rect.height) + 'px';
+        
+        // Create jagged SVG shard
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 100 100');
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+        
+        // Create jagged polygon path
+        const points = [];
+        const numPoints = 5 + Math.floor(Math.random() * 4);
+        for (let i = 0; i < numPoints; i++) {
+            const angle = (i / numPoints) * Math.PI * 2;
+            const radius = 30 + Math.random() * 40;
+            const x = 50 + Math.cos(angle) * radius;
+            const y = 50 + Math.sin(angle) * radius;
+            points.push(`${x},${y}`);
+        }
+        
+        const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        polygon.setAttribute('points', points.join(' '));
+        polygon.setAttribute('fill', 'url(#shard-grad)');
+        polygon.setAttribute('stroke', '#ffffff');
+        polygon.setAttribute('stroke-width', '2');
+        
+        // Add gradient
+        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+        gradient.setAttribute('id', 'shard-grad');
+        gradient.innerHTML = `
+            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
+            <stop offset="50%" style="stop-color:#e8e8e8;stop-opacity:0.8" />
+            <stop offset="100%" style="stop-color:#d0d0d0;stop-opacity:0.7" />
+        `;
+        defs.appendChild(gradient);
+        svg.appendChild(defs);
+        svg.appendChild(polygon);
+        shard.appendChild(svg);
+        
+        // Apply violent explosion effect
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 400 + Math.random() * 600;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        const rotation = Math.random() * 1440 - 720;
+        
+        shard.style.filter = 'drop-shadow(0 0 10px rgba(255,255,255,0.8))';
+        shard.style.zIndex = '200';
+        
+        // Animate shard explosion
+        setTimeout(() => {
+            shard.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            shard.style.transform = `translate(${tx}px, ${ty}px) rotate(${rotation}deg) scale(0.1)`;
+            shard.style.opacity = '0';
+        }, 50);
+        
+        return shard;
     }
     
     playShatterSound() {
@@ -442,6 +513,11 @@ class SimpleMirrorPuzzle {
         this.placedCount = 0;
         this.updateProgress();
         
+        // Remove all glass shards
+        const shards = this.targetArea.querySelectorAll('.glass-shard');
+        shards.forEach(shard => shard.remove());
+        
+        // Reset all pieces
         this.pieces.forEach(piece => {
             piece.placed = false;
             piece.element.classList.remove('placed');
@@ -451,6 +527,9 @@ class SimpleMirrorPuzzle {
             piece.element.style.width = '120px';
             piece.element.style.height = '120px';
             piece.element.style.zIndex = '1';
+            piece.element.style.opacity = '1';
+            piece.element.style.transform = '';
+            piece.element.style.transition = '';
             this.piecesArea.appendChild(piece.element);
         });
         
