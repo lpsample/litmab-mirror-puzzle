@@ -89,41 +89,27 @@ body {
    =================================== */
 .target-area {
     position: relative;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, rgba(74, 158, 255, 0.05) 70%);
-    border: 3px dashed rgba(74, 158, 255, 0.4);
-    border-radius: 50%;
+    width: 480px;
+    height: 480px;
+    background: linear-gradient(135deg, rgba(20, 20, 30, 0.8) 0%, rgba(10, 10, 20, 0.9) 100%);
+    border: 4px solid rgba(100, 100, 120, 0.4);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow:
-        0 0 60px rgba(74, 158, 255, 0.3),
-        inset 0 0 60px rgba(74, 158, 255, 0.1);
+        0 0 40px rgba(0, 0, 0, 0.6),
+        inset 0 0 60px rgba(0, 0, 0, 0.4),
+        0 0 80px rgba(74, 158, 255, 0.2);
     transition: all 0.3s ease;
-    animation: pulseTarget 3s ease-in-out infinite;
-}
-
-@keyframes pulseTarget {
-    0%, 100% {
-        border-color: rgba(74, 158, 255, 0.4);
-        box-shadow:
-            0 0 60px rgba(74, 158, 255, 0.3),
-            inset 0 0 60px rgba(74, 158, 255, 0.1);
-    }
-    50% {
-        border-color: rgba(74, 158, 255, 0.6);
-        box-shadow:
-            0 0 80px rgba(74, 158, 255, 0.5),
-            inset 0 0 80px rgba(74, 158, 255, 0.2);
-    }
 }
 
 .target-area.complete {
-    border-color: rgba(74, 158, 255, 0.5);
-    box-shadow: 
-        0 0 60px rgba(74, 158, 255, 0.3),
-        inset 0 0 60px rgba(74, 158, 255, 0.1);
+    border-color: rgba(200, 200, 220, 0.6);
+    box-shadow:
+        0 0 80px rgba(255, 255, 255, 0.4),
+        inset 0 0 80px rgba(255, 255, 255, 0.2),
+        0 0 120px rgba(74, 158, 255, 0.3);
     animation: pulseGlow 2s ease-in-out infinite;
 }
 
@@ -135,24 +121,6 @@ body {
     pointer-events: none;
 }
 
-.target-slot {
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    pointer-events: none;
-    transition: all 0.3s ease;
-    background: radial-gradient(circle, rgba(74, 158, 255, 0.1) 0%, transparent 70%);
-    border: 2px dashed rgba(74, 158, 255, 0.2);
-    border-radius: 10px;
-}
-
-/* Position target slots in a circular pattern */
-.target-slot[data-piece="1"] { top: 10%; left: 50%; transform: translateX(-50%); }
-.target-slot[data-piece="2"] { top: 30%; right: 10%; }
-.target-slot[data-piece="3"] { bottom: 30%; right: 10%; }
-.target-slot[data-piece="4"] { bottom: 10%; left: 50%; transform: translateX(-50%); }
-.target-slot[data-piece="5"] { bottom: 30%; left: 10%; }
-.target-slot[data-piece="6"] { top: 30%; left: 10%; }
 
 /* ===================================
    REVEALED CONTENT
@@ -167,7 +135,7 @@ body {
     opacity: 0;
     pointer-events: none;
     transition: opacity 1s ease;
-    border-radius: 50%;
+    border-radius: 8px;
     overflow: hidden;
 }
 
@@ -177,9 +145,9 @@ body {
 }
 
 .album-artwork {
-    width: 90%;
-    height: 90%;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 50px rgba(74, 158, 255, 0.5);
 }
@@ -210,72 +178,59 @@ body {
 /* ===================================
    MIRROR PIECES
    =================================== */
-.mirror-piece {
-    width: 120px;
-    height: 120px;
+/* Mirror Shards */
+.mirror-shard {
+    max-width: 250px;
+    max-height: 250px;
     cursor: grab;
     position: relative;
     transition: transform 0.2s ease, filter 0.2s ease;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5))
-            drop-shadow(0 0 15px rgba(255, 255, 255, 0.3))
-            drop-shadow(0 0 25px rgba(74, 158, 255, 0.2));
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6))
+            drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))
+            drop-shadow(0 0 30px rgba(200, 200, 255, 0.3));
     touch-action: none;
     user-select: none;
-    animation: floatPiece 3s ease-in-out infinite;
+    animation: floatShard 4s ease-in-out infinite;
 }
 
-.mirror-piece:hover {
-    transform: scale(1.1);
-    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6))
-            drop-shadow(0 0 20px rgba(255, 255, 255, 0.5))
-            drop-shadow(0 0 35px rgba(74, 158, 255, 0.4));
+.mirror-shard:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.7))
+            drop-shadow(0 0 25px rgba(255, 255, 255, 0.6))
+            drop-shadow(0 0 40px rgba(200, 200, 255, 0.5));
     animation: none;
 }
 
-@keyframes floatPiece {
+@keyframes floatShard {
     0%, 100% {
         transform: translateY(0px) rotate(0deg);
     }
     50% {
-        transform: translateY(-5px) rotate(2deg);
+        transform: translateY(-8px) rotate(1deg);
     }
 }
 
-.mirror-piece.dragging {
+.mirror-shard.dragging {
     cursor: grabbing;
-    opacity: 0.8;
+    opacity: 0.9;
     z-index: 1000;
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.08);
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.8))
+            drop-shadow(0 0 30px rgba(255, 255, 255, 0.7))
+            drop-shadow(0 0 50px rgba(74, 158, 255, 0.6));
 }
 
-.mirror-piece.placed {
+.mirror-shard.placed {
     cursor: default;
     pointer-events: none;
-    animation: snapInPlace 0.4s ease-out;
+    animation: snapInPlace 0.5s ease-out;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-.mirror-piece svg {
+.mirror-shard svg {
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-}
-
-/* Mirror shard gradient effect */
-.mirror-shard {
-    fill: url(#mirrorGradient);
-    stroke: rgba(255, 255, 255, 0.6);
-    stroke-width: 2;
-    transition: all 0.3s ease;
-}
-
-.mirror-piece:hover .mirror-shard {
-    fill: url(#mirrorGradientHover);
-    filter: brightness(1.2);
-}
-
-.mirror-piece.placed .mirror-shard {
-    stroke: rgba(74, 158, 255, 0.8);
-    stroke-width: 1;
+    display: block;
 }
 
 /* ===================================
