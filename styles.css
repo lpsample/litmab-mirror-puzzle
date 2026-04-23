@@ -17,6 +17,8 @@ body {
     justify-content: center;
     overflow-x: hidden;
     padding: 20px;
+    margin: 0;
+    width: 100%;
 }
 
 /* ===================================
@@ -106,6 +108,8 @@ body {
         0 0 100px rgba(74, 158, 255, 0.3);
     transition: all 0.3s ease;
     animation: pulseFrame 3s ease-in-out infinite;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 @keyframes pulseFrame {
