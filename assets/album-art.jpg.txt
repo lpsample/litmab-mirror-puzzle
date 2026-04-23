@@ -1,0 +1,3 @@
+PLACEHOLDER: Add your album artwork here as "album-art.jpg"
+Recommended size: 800x800px or larger (square format)
+Supported formats: JPG, PNG, WebP
