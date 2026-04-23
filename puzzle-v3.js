@@ -268,30 +268,34 @@ class SimpleMirrorPuzzle {
         piece.element.classList.add('placed');
         piece.element.classList.remove('dragging');
         
-        // Position piece at exact target location
-        piece.element.style.position = 'absolute';
-        piece.element.style.left = piece.targetX + 'px';
-        piece.element.style.top = piece.targetY + 'px';
+        // Get target area actual size for scaling
+        const targetRect = this.targetArea.getBoundingClientRect();
+        const scale = targetRect.width / 400; // 400 is the base design width
         
-        // Set size based on redesigned shard dimensions (NO GAPS)
+        // Position piece at exact target location (scaled)
+        piece.element.style.position = 'absolute';
+        piece.element.style.left = (piece.targetX * scale) + 'px';
+        piece.element.style.top = (piece.targetY * scale) + 'px';
+        
+        // Set size based on redesigned shard dimensions (scaled for mobile)
         if (piece.id === 1) {
-            piece.element.style.width = '200px';
-            piece.element.style.height = '200px';
+            piece.element.style.width = (200 * scale) + 'px';
+            piece.element.style.height = (200 * scale) + 'px';
         } else if (piece.id === 2) {
-            piece.element.style.width = '200px';
-            piece.element.style.height = '200px';
+            piece.element.style.width = (200 * scale) + 'px';
+            piece.element.style.height = (200 * scale) + 'px';
         } else if (piece.id === 3) {
-            piece.element.style.width = '130px';
-            piece.element.style.height = '100px';
+            piece.element.style.width = (130 * scale) + 'px';
+            piece.element.style.height = (100 * scale) + 'px';
         } else if (piece.id === 4) {
-            piece.element.style.width = '135px';
-            piece.element.style.height = '100px';
+            piece.element.style.width = (135 * scale) + 'px';
+            piece.element.style.height = (100 * scale) + 'px';
         } else if (piece.id === 5) {
-            piece.element.style.width = '135px';
-            piece.element.style.height = '100px';
+            piece.element.style.width = (135 * scale) + 'px';
+            piece.element.style.height = (100 * scale) + 'px';
         } else if (piece.id === 6) {
-            piece.element.style.width = '400px';
-            piece.element.style.height = '100px';
+            piece.element.style.width = (400 * scale) + 'px';
+            piece.element.style.height = (100 * scale) + 'px';
         }
         
         piece.element.style.zIndex = '100';
