@@ -95,7 +95,7 @@ class MirrorPuzzle {
         // Create gradient definitions
         const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
         
-        // Normal gradient
+        // Normal gradient - enhanced mirror effect
         const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
         gradient.setAttribute('id', `mirrorGradient-${id}`);
         gradient.setAttribute('x1', '0%');
@@ -105,21 +105,55 @@ class MirrorPuzzle {
         
         const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
         stop1.setAttribute('offset', '0%');
-        stop1.setAttribute('style', 'stop-color:#e0e0e0;stop-opacity:0.9');
+        stop1.setAttribute('style', 'stop-color:#f0f5fa;stop-opacity:0.95');
         
         const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-        stop2.setAttribute('offset', '50%');
-        stop2.setAttribute('style', 'stop-color:#ffffff;stop-opacity:0.95');
+        stop2.setAttribute('offset', '25%');
+        stop2.setAttribute('style', 'stop-color:#dce6f0;stop-opacity:0.9');
         
         const stop3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-        stop3.setAttribute('offset', '100%');
-        stop3.setAttribute('style', 'stop-color:#c0c0c0;stop-opacity:0.9');
+        stop3.setAttribute('offset', '50%');
+        stop3.setAttribute('style', 'stop-color:#b4c8dc;stop-opacity:0.85');
+        
+        const stop4 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+        stop4.setAttribute('offset', '75%');
+        stop4.setAttribute('style', 'stop-color:#a0b4c8;stop-opacity:0.8');
+        
+        const stop5 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+        stop5.setAttribute('offset', '100%');
+        stop5.setAttribute('style', 'stop-color:#8ca0b4;stop-opacity:0.75');
         
         gradient.appendChild(stop1);
         gradient.appendChild(stop2);
         gradient.appendChild(stop3);
+        gradient.appendChild(stop4);
+        gradient.appendChild(stop5);
         
-        // Hover gradient
+        // Diagonal shine gradient
+        const shineGradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+        shineGradient.setAttribute('id', `shineGradient-${id}`);
+        shineGradient.setAttribute('x1', '0%');
+        shineGradient.setAttribute('y1', '0%');
+        shineGradient.setAttribute('x2', '100%');
+        shineGradient.setAttribute('y2', '100%');
+        
+        const shineStop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+        shineStop1.setAttribute('offset', '0%');
+        shineStop1.setAttribute('style', 'stop-color:#ffffff;stop-opacity:0.9');
+        
+        const shineStop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+        shineStop2.setAttribute('offset', '30%');
+        shineStop2.setAttribute('style', 'stop-color:#ffffff;stop-opacity:0.6');
+        
+        const shineStop3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+        shineStop3.setAttribute('offset', '70%');
+        shineStop3.setAttribute('style', 'stop-color:#ffffff;stop-opacity:0');
+        
+        shineGradient.appendChild(shineStop1);
+        shineGradient.appendChild(shineStop2);
+        shineGradient.appendChild(shineStop3);
+        
+        // Hover gradient - brighter
         const gradientHover = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
         gradientHover.setAttribute('id', `mirrorGradientHover-${id}`);
         gradientHover.setAttribute('x1', '0%');
@@ -129,31 +163,76 @@ class MirrorPuzzle {
         
         const stopH1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
         stopH1.setAttribute('offset', '0%');
-        stopH1.setAttribute('style', 'stop-color:#f0f0f0;stop-opacity:1');
+        stopH1.setAttribute('style', 'stop-color:#ffffff;stop-opacity:1');
         
         const stopH2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-        stopH2.setAttribute('offset', '50%');
-        stopH2.setAttribute('style', 'stop-color:#ffffff;stop-opacity:1');
+        stopH2.setAttribute('offset', '25%');
+        stopH2.setAttribute('style', 'stop-color:#f0f5fa;stop-opacity:0.95');
         
         const stopH3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-        stopH3.setAttribute('offset', '100%');
-        stopH3.setAttribute('style', 'stop-color:#d0d0d0;stop-opacity:1');
+        stopH3.setAttribute('offset', '50%');
+        stopH3.setAttribute('style', 'stop-color:#dce6f0;stop-opacity:0.9');
+        
+        const stopH4 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+        stopH4.setAttribute('offset', '100%');
+        stopH4.setAttribute('style', 'stop-color:#c8d2dc;stop-opacity:0.85');
         
         gradientHover.appendChild(stopH1);
         gradientHover.appendChild(stopH2);
         gradientHover.appendChild(stopH3);
+        gradientHover.appendChild(stopH4);
         
         defs.appendChild(gradient);
+        defs.appendChild(shineGradient);
         defs.appendChild(gradientHover);
         svg.appendChild(defs);
         
-        // Create path
+        // Create main path
         const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         pathElement.setAttribute('d', path);
         pathElement.setAttribute('class', 'mirror-shard');
         pathElement.setAttribute('fill', `url(#mirrorGradient-${id})`);
+        pathElement.setAttribute('stroke', 'rgba(255, 255, 255, 0.3)');
+        pathElement.setAttribute('stroke-width', '0.5');
         
         svg.appendChild(pathElement);
+        
+        // Add diagonal shine overlay
+        const shineElement = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        shineElement.setAttribute('cx', '40');
+        shineElement.setAttribute('cy', '35');
+        shineElement.setAttribute('rx', '25');
+        shineElement.setAttribute('ry', '35');
+        shineElement.setAttribute('fill', `url(#shineGradient-${id})`);
+        shineElement.setAttribute('transform', 'rotate(-25 40 35)');
+        shineElement.setAttribute('opacity', '0.7');
+        shineElement.setAttribute('class', 'shine-mark');
+        
+        // Clip shine to piece shape
+        const clipPath = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
+        clipPath.setAttribute('id', `clip-${id}`);
+        const clipPathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        clipPathElement.setAttribute('d', path);
+        clipPath.appendChild(clipPathElement);
+        defs.appendChild(clipPath);
+        
+        shineElement.setAttribute('clip-path', `url(#clip-${id})`);
+        svg.appendChild(shineElement);
+        
+        // Add secondary smaller shine
+        const shine2Element = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        shine2Element.setAttribute('cx', '75');
+        shine2Element.setAttribute('cy', '80');
+        shine2Element.setAttribute('rx', '15');
+        shine2Element.setAttribute('ry', '20');
+        shine2Element.setAttribute('fill', 'rgba(255, 255, 255, 0.4)');
+        shine2Element.setAttribute('transform', 'rotate(35 75 80)');
+        shine2Element.setAttribute('opacity', '0.5');
+        shine2Element.setAttribute('clip-path', `url(#clip-${id})`);
+        shine2Element.setAttribute('class', 'shine-mark-secondary');
+        
+        svg.appendChild(shine2Element);
+        
         pieceDiv.appendChild(svg);
         
         // Store piece data
