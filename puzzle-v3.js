@@ -119,7 +119,7 @@ class SimpleMirrorPuzzle {
         svg.style.width = '100%';
         svg.style.height = '100%';
         
-        // Create gradient
+        // Create gradient - dark mirror effect
         const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
         const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
         gradient.setAttribute('id', `grad-${data.id}`);
@@ -129,31 +129,88 @@ class SimpleMirrorPuzzle {
         gradient.setAttribute('y2', '100%');
         
         const stops = [
-            { offset: '0%', color: '#ffffff' },
-            { offset: '25%', color: '#f5f5f5' },
-            { offset: '50%', color: '#e8e8e8' },
-            { offset: '75%', color: '#f0f0f0' },
-            { offset: '100%', color: '#e0e0e0' }
+            { offset: '0%', color: '#606870', opacity: 0.95 },
+            { offset: '25%', color: '#505860', opacity: 0.92 },
+            { offset: '50%', color: '#404850', opacity: 0.9 },
+            { offset: '75%', color: '#303840', opacity: 0.88 },
+            { offset: '100%', color: '#202830', opacity: 0.85 }
         ];
         
         stops.forEach(s => {
             const stop = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
             stop.setAttribute('offset', s.offset);
-            stop.setAttribute('style', `stop-color:${s.color};stop-opacity:1`);
+            stop.setAttribute('style', `stop-color:${s.color};stop-opacity:${s.opacity}`);
             gradient.appendChild(stop);
         });
         
+        // Diagonal shine gradient
+        const shineGradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+        shineGradient.setAttribute('id', `shine-${data.id}`);
+        shineGradient.setAttribute('x1', '0%');
+        shineGradient.setAttribute('y1', '0%');
+        shineGradient.setAttribute('x2', '100%');
+        shineGradient.setAttribute('y2', '100%');
+        
+        const shineStops = [
+            { offset: '0%', color: '#ffffff', opacity: 0.9 },
+            { offset: '30%', color: '#ffffff', opacity: 0.6 },
+            { offset: '70%', color: '#ffffff', opacity: 0 }
+        ];
+        
+        shineStops.forEach(s => {
+            const stop = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop.setAttribute('offset', s.offset);
+            stop.setAttribute('style', `stop-color:${s.color};stop-opacity:${s.opacity}`);
+            shineGradient.appendChild(stop);
+        });
+        
         defs.appendChild(gradient);
+        defs.appendChild(shineGradient);
+        
+        // Clip path for shine
+        const clipPath = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
+        clipPath.setAttribute('id', `clip-${data.id}`);
+        const clipPathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        clipPathElement.setAttribute('d', data.path);
+        clipPath.appendChild(clipPathElement);
+        defs.appendChild(clipPath);
+        
         svg.appendChild(defs);
         
-        // Create path
+        // Create main path
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', data.path);
         path.setAttribute('fill', `url(#grad-${data.id})`);
-        path.setAttribute('stroke', '#ffffff');
-        path.setAttribute('stroke-width', '3');
+        path.setAttribute('stroke', 'rgba(80, 90, 100, 0.6)');
+        path.setAttribute('stroke-width', '2');
         
         svg.appendChild(path);
+        
+        // Add diagonal shine overlay
+        const shineElement = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        shineElement.setAttribute('cx', '150');
+        shineElement.setAttribute('cy', '130');
+        shineElement.setAttribute('rx', '90');
+        shineElement.setAttribute('ry', '130');
+        shineElement.setAttribute('fill', `url(#shine-${data.id})`);
+        shineElement.setAttribute('transform', 'rotate(-25 150 130)');
+        shineElement.setAttribute('opacity', '0.7');
+        shineElement.setAttribute('clip-path', `url(#clip-${data.id})`);
+        
+        svg.appendChild(shineElement);
+        
+        // Add secondary smaller shine
+        const shine2Element = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        shine2Element.setAttribute('cx', '280');
+        shine2Element.setAttribute('cy', '300');
+        shine2Element.setAttribute('rx', '55');
+        shine2Element.setAttribute('ry', '75');
+        shine2Element.setAttribute('fill', 'rgba(255, 255, 255, 0.4)');
+        shine2Element.setAttribute('transform', 'rotate(35 280 300)');
+        shine2Element.setAttribute('opacity', '0.5');
+        shine2Element.setAttribute('clip-path', `url(#clip-${data.id})`);
+        
+        svg.appendChild(shine2Element);
         pieceDiv.appendChild(svg);
         
         // Store piece data
