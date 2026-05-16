@@ -187,17 +187,20 @@ class SimpleMirrorPuzzle {
         
         svg.appendChild(path);
         
-        // Diagonal shine streak
+        // Diagonal shine streak - using a group with clip-path
+        const shineGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        shineGroup.setAttribute('clip-path', `url(#clip-${data.id})`);
+        
         const shineRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        shineRect.setAttribute('x', '0');
-        shineRect.setAttribute('y', '100');
-        shineRect.setAttribute('width', '500');
-        shineRect.setAttribute('height', '60');
+        shineRect.setAttribute('x', '-100');
+        shineRect.setAttribute('y', '50');
+        shineRect.setAttribute('width', '600');
+        shineRect.setAttribute('height', '50');
         shineRect.setAttribute('fill', `url(#shine-${data.id})`);
         shineRect.setAttribute('transform', 'rotate(-45 200 200)');
-        shineRect.setAttribute('clip-path', `url(#clip-${data.id})`);
         
-        svg.appendChild(shineRect);
+        shineGroup.appendChild(shineRect);
+        svg.appendChild(shineGroup);
         pieceDiv.appendChild(svg);
         
         // Store piece data
