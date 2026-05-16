@@ -95,7 +95,7 @@ class MirrorPuzzle {
         // Create gradient definitions
         const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
         
-        // Normal gradient - silver mirror effect
+        // Normal gradient - dark mirror effect
         const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
         gradient.setAttribute('id', `mirrorGradient-${id}`);
         gradient.setAttribute('x1', '0%');
@@ -105,23 +105,23 @@ class MirrorPuzzle {
         
         const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
         stop1.setAttribute('offset', '0%');
-        stop1.setAttribute('style', 'stop-color:#c0c8d0;stop-opacity:0.95');
+        stop1.setAttribute('style', 'stop-color:#606870;stop-opacity:0.95');
         
         const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
         stop2.setAttribute('offset', '25%');
-        stop2.setAttribute('style', 'stop-color:#a8b0b8;stop-opacity:0.9');
+        stop2.setAttribute('style', 'stop-color:#505860;stop-opacity:0.92');
         
         const stop3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
         stop3.setAttribute('offset', '50%');
-        stop3.setAttribute('style', 'stop-color:#8090a0;stop-opacity:0.85');
+        stop3.setAttribute('style', 'stop-color:#404850;stop-opacity:0.9');
         
         const stop4 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
         stop4.setAttribute('offset', '75%');
-        stop4.setAttribute('style', 'stop-color:#687888;stop-opacity:0.8');
+        stop4.setAttribute('style', 'stop-color:#303840;stop-opacity:0.88');
         
         const stop5 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
         stop5.setAttribute('offset', '100%');
-        stop5.setAttribute('style', 'stop-color:#506070;stop-opacity:0.75');
+        stop5.setAttribute('style', 'stop-color:#202830;stop-opacity:0.85');
         
         gradient.appendChild(stop1);
         gradient.appendChild(stop2);
@@ -153,7 +153,7 @@ class MirrorPuzzle {
         shineGradient.appendChild(shineStop2);
         shineGradient.appendChild(shineStop3);
         
-        // Hover gradient - brighter silver
+        // Hover gradient - slightly brighter mirror
         const gradientHover = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
         gradientHover.setAttribute('id', `mirrorGradientHover-${id}`);
         gradientHover.setAttribute('x1', '0%');
@@ -163,19 +163,19 @@ class MirrorPuzzle {
         
         const stopH1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
         stopH1.setAttribute('offset', '0%');
-        stopH1.setAttribute('style', 'stop-color:#d8e0e8;stop-opacity:1');
+        stopH1.setAttribute('style', 'stop-color:#788090;stop-opacity:1');
         
         const stopH2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
         stopH2.setAttribute('offset', '25%');
-        stopH2.setAttribute('style', 'stop-color:#c0c8d0;stop-opacity:0.95');
+        stopH2.setAttribute('style', 'stop-color:#687080;stop-opacity:0.95');
         
         const stopH3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
         stopH3.setAttribute('offset', '50%');
-        stopH3.setAttribute('style', 'stop-color:#98a8b8;stop-opacity:0.9');
+        stopH3.setAttribute('style', 'stop-color:#586070;stop-opacity:0.92');
         
         const stopH4 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
         stopH4.setAttribute('offset', '100%');
-        stopH4.setAttribute('style', 'stop-color:#788898;stop-opacity:0.85');
+        stopH4.setAttribute('style', 'stop-color:#485060;stop-opacity:0.9');
         
         gradientHover.appendChild(stopH1);
         gradientHover.appendChild(stopH2);
@@ -192,7 +192,7 @@ class MirrorPuzzle {
         pathElement.setAttribute('d', path);
         pathElement.setAttribute('class', 'mirror-shard');
         pathElement.setAttribute('fill', `url(#mirrorGradient-${id})`);
-        pathElement.setAttribute('stroke', 'rgba(160, 170, 180, 0.4)');
+        pathElement.setAttribute('stroke', 'rgba(80, 90, 100, 0.6)');
         pathElement.setAttribute('stroke-width', '0.5');
         
         svg.appendChild(pathElement);
