@@ -186,31 +186,18 @@ class SimpleMirrorPuzzle {
         
         svg.appendChild(path);
         
-        // Add diagonal shine overlay
-        const shineElement = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-        shineElement.setAttribute('cx', '150');
-        shineElement.setAttribute('cy', '130');
-        shineElement.setAttribute('rx', '90');
-        shineElement.setAttribute('ry', '130');
-        shineElement.setAttribute('fill', `url(#shine-${data.id})`);
-        shineElement.setAttribute('transform', 'rotate(-25 150 130)');
-        shineElement.setAttribute('opacity', '0.7');
-        shineElement.setAttribute('clip-path', `url(#clip-${data.id})`);
+        // Add subtle diagonal shine streak
+        const shineRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        shineRect.setAttribute('x', '50');
+        shineRect.setAttribute('y', '-50');
+        shineRect.setAttribute('width', '80');
+        shineRect.setAttribute('height', '500');
+        shineRect.setAttribute('fill', `url(#shine-${data.id})`);
+        shineRect.setAttribute('transform', 'rotate(-35 200 200)');
+        shineRect.setAttribute('opacity', '0.4');
+        shineRect.setAttribute('clip-path', `url(#clip-${data.id})`);
         
-        svg.appendChild(shineElement);
-        
-        // Add secondary smaller shine
-        const shine2Element = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-        shine2Element.setAttribute('cx', '280');
-        shine2Element.setAttribute('cy', '300');
-        shine2Element.setAttribute('rx', '55');
-        shine2Element.setAttribute('ry', '75');
-        shine2Element.setAttribute('fill', 'rgba(255, 255, 255, 0.4)');
-        shine2Element.setAttribute('transform', 'rotate(35 280 300)');
-        shine2Element.setAttribute('opacity', '0.5');
-        shine2Element.setAttribute('clip-path', `url(#clip-${data.id})`);
-        
-        svg.appendChild(shine2Element);
+        svg.appendChild(shineRect);
         pieceDiv.appendChild(svg);
         
         // Store piece data
